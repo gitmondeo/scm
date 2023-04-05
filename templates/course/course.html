@@ -1,0 +1,25 @@
+{{template "base.html" .}}
+
+{{define "title"}}
+<title>课程管理</title>
+{{end}}
+
+{{define "content"}}
+<h3>课程管理</h3><br>
+
+<style>
+    table th,tr td {
+        text-align: center;
+    }
+</style>
+
+
+
+<table class="table table-bordered">
+    <th>ID</th>
+    <th>课程</th>
+    <th>学分</th>
+    <th>学时</th>
+    <th>授课老师</th>
+</table>
+{{end}}

@@ -1,0 +1,21 @@
+{{template "base.html" .}}
+
+{{define "title"}}
+<title>班级管理</title>
+{{end}}
+
+{{define "content"}}
+<h3>班级管理</h3><br>
+<style>
+    table th,tr td {
+        text-align: center;
+    }
+</style>
+
+<table class="table table-bordered">
+    <th>ID</th>
+    <th>班级名称</th>
+    <th>班级人数</th>
+    <th>导员</th>
+</table>
+{{end}}
