@@ -20,6 +20,6 @@ func InitRoute(r *gin.Engine) {
 	//课程请求
 
 	course := r.Group("/course")
-	InitClassRoute(course)
+	InitCourseRoute(course)
 
 }
