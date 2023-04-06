@@ -1,7 +1,12 @@
 package core
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func GetClass(ctx *gin.Context) {
 	ctx.HTML(200, "class.html", nil)
+}
+func AddClass(ctx *gin.Context) {
+
 }

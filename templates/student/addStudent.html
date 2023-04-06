@@ -1,0 +1,36 @@
+{{template "base.html" .}}
+
+{{define "title"}}
+<title>添加学生</title>
+{{end}}
+
+{{define "content"}}
+<h3>添加学生</h3><br>
+<form action="/student/add" method="post">
+    <div class="form-group">
+        <label for="sno">学号</label>
+        <input class="form-control" type="text" name="sno" id="sno" placeholder="学号">
+    </div>
+    <div class="form-group">
+        <label for="name">姓名</label>
+        <input class="form-control" type="text" name="name" id="name" placeholder="姓名">
+    </div>
+    <div class="form-group">
+        <label for="pwd">密码</label>
+        <input class="form-control" type="password" name="pwd" id="pwd" placeholder="密码">
+    </div>
+    <div class="form-group">
+        <label for="gender">性别</label>
+        <input class="form-control" type="text" name="gender" id="gender" placeholder="性别">
+    </div>
+    <div class="form-group">
+        <label for="cls">班级</label>
+        <input class="form-control" type="text" name="cls" id="cls" placeholder="班级">
+    </div>
+
+
+
+    <input type="button" value="提交" class="btn btn-danger pull-right">
+</form>
+
+{{end}}
