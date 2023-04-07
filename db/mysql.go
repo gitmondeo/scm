@@ -84,7 +84,7 @@ type Course struct {
 //------------------------模型创建end-------------------------------------
 
 //-------------------------连接数据库-------------------------------------
-var db *gorm.DB
+var DB *gorm.DB
 
 func InitDB() *gorm.DB {
 
@@ -96,17 +96,17 @@ func InitDB() *gorm.DB {
 			LogLevel: logger.Info,
 		},
 	)
-	db, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{
+	DB, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		Logger: newLogger,
 	})
 
 	//迁移模型类，将模型类转换成SQL
-	db.AutoMigrate(
+	DB.AutoMigrate(
 		&Teacher{},
 		&Class{},
 		&Student{},
 		&Course{},
 	)
-	return db
+	return DB
 
 }

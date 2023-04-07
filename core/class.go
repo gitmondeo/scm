@@ -7,6 +7,7 @@ import (
 func GetClass(ctx *gin.Context) {
 	ctx.HTML(200, "class.html", nil)
 }
-func AddClass(ctx *gin.Context) {
+func GetClassHtml(ctx *gin.Context) {
 
+	ctx.HTML(200, "addClass.html", nil)
 }

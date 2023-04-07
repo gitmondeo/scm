@@ -7,4 +7,5 @@ import (
 
 func InitCourseRoute(r *gin.RouterGroup) {
 	r.GET("/", GetCourse)
+	r.GET("/add", GetCourseHtml)
 }

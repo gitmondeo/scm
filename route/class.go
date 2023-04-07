@@ -7,4 +7,5 @@ import (
 
 func InitClassRoute(r *gin.RouterGroup) {
 	r.GET("/", GetClass)
+	r.GET("/add", GetClassHtml)
 }
