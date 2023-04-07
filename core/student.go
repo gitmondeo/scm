@@ -10,7 +10,6 @@ func GetStudent(ctx *gin.Context) {
 	ctx.HTML(200, "student.html", nil)
 }
 func GetAddStuHtml(ctx *gin.Context) {
-
 	ctx.HTML(200, "addStudent.html", nil)
 }
 func AddStudent(ctx *gin.Context) {
@@ -26,7 +25,5 @@ func AddStudent(ctx *gin.Context) {
 	//数据库存储
 	DB.Create(&stus)
 	//数据库查询
-	ctx.JSON(200, gin.H{
-		"stu": stus,
-	})
+	ctx.String(200, "添加完成")
 }

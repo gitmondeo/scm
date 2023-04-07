@@ -6,7 +6,7 @@
 
 {{define "content"}}
 <h3>添加班级</h3><br>
-<form action="/class/add" method="post">
+<form action="" method="post">
     <div class="form-group">
         <label for="name">班级名称</label>
         <input class="form-control" type="text" name="name" id="name" placeholder="班级名称">
@@ -17,10 +17,10 @@
     </div>
     <div class="form-group">
         <label for="tutor">导员</label>
-        <input class="form-control" type="password" name="tutor" id="tutor" placeholder="导员">
+        <input class="form-control" type="text" name="tutor" id="tutor" placeholder="导员">
     </div>
 
-    <input type="button" value="提交" class="btn btn-danger pull-right">
+    <input type="submit" value="提交" class="btn btn-danger pull-right">
 </form>
 
 {{end}}
