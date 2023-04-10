@@ -19,5 +19,13 @@
     <th>导员</th>
     <th>编辑</th>
     <th>删除</th>
+    {{range $class := .classes}}
+    <tr>
+        <td>{{$class.Name}}</td>
+        <td>{{$class.Num}}</td>
+        <td></td>
+        <td></td>
+    </tr>
+    {{end}}
 </table>
 {{end}}

@@ -8,8 +8,6 @@ import (
 
 func GetStudent(ctx *gin.Context) {
 	var students []Student
-
-	//DB.Find(&students)
 	DB.Preload("Class").Find(&students)
 	ctx.HTML(200, "student.html", gin.H{
 		"students": students,
@@ -39,7 +37,6 @@ func AddStudent(ctx *gin.Context) {
 	var students []Student
 	//DB.Find(&students)
 	DB.Preload("Class").Find(&students)
-	ctx.JSON(200, gin.H{
-		"students": students,
-	})
+	ctx.Redirect(301, "/student")
+
 }

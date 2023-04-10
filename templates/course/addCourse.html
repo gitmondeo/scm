@@ -22,9 +22,9 @@
     <div class="form-group">
         <label for="teacher">授课教师</label>
         <select name="teacher" id="teacher" class="form-control">
-        <!--    {{range $course := .courses}}
-            <option value=""></option>
-            {{end}}-->
+            {{range $teacher := .teachers}}
+            <option value="{{$teacher.ID}}">{{$teacher.Name}}</option>
+            {{end}}
         </select>
 
 

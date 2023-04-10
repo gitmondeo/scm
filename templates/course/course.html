@@ -9,11 +9,10 @@
 <p><a href="/course/add" class="btn btn-primary">添加课程</a></p>
 
 <style>
-    table th,tr td {
+    table th, tr td {
         text-align: center;
     }
 </style>
-
 
 
 <table class="table table-bordered">
@@ -21,5 +20,13 @@
     <th>学分</th>
     <th>学时</th>
     <th>授课老师</th>
+    {{range $course := .courses}}
+    <tr>
+        <td>{{$course.Name}}</td>
+        <td>{{$course.Credit}}</td>
+        <td>{{$course.Period}}</td>
+        <td>{{$course.Teacher.Name}}</td>
+        {{end}}
+    </tr>
 </table>
 {{end}}

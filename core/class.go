@@ -7,10 +7,18 @@ import (
 )
 
 func GetClass(ctx *gin.Context) {
-	ctx.HTML(200, "class.html", nil)
+	var classes []Class
+	DB.Preload("Teacher").Find(&classes)
+	ctx.HTML(200, "class.html", gin.H{
+		"classes": classes,
+	})
 }
 func GetClassHtml(ctx *gin.Context) {
-	ctx.HTML(200, "addClass.html", nil)
+	var tutors []Teacher
+	DB.Find(&tutors)
+	ctx.HTML(200, "addClass.html", gin.H{
+		"tutors": tutors,
+	})
 }
 
 func AddClass(ctx *gin.Context) {
@@ -19,8 +27,9 @@ func AddClass(ctx *gin.Context) {
 	tutor, _ := strconv.Atoi(ctx.PostForm("tutor"))
 	classes := Class{Base: Base{Name: name}, Num: num, TutorID: tutor}
 	DB.Create(&classes)
-	ctx.JSON(200, gin.H{
-		"classes": classes,
-	})
-	//ctx.String(200, "ok")
+	//ctx.JSON(200, gin.H{
+	//	"classes": classes,
+	//})
+	ctx.Redirect(301, "/class")
+
 }
