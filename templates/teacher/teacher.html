@@ -1,0 +1,38 @@
+{{template "base.html" .}}
+
+{{define "title"}}
+<title>教师管理</title>
+{{end}}
+
+{{define "content"}}
+<h3>教师管理</h3><br>
+<p><a class="btn btn-primary" href="/teacher/add">添加教师</a></p>
+
+<style>
+  table th,tr td {
+    text-align: center;
+  }
+</style>
+<table class="table table-bordered" >
+  <th>教师编号</th>
+  <th>姓名</th>
+  <th>性别</th>
+  <th>年龄</th>
+  <th>电话</th>
+  <th>备注</th>
+  <th>编辑</th>
+  <th>删除</th>
+  {{range $teacher := .teachers}}
+  <tr>
+    <td>{{$teacher.Tno}}</td>
+    <td>{{$teacher.Name}}</td>
+    <td>{{$teacher.Gender}}</td>
+    <td>{{$teacher.Age}}</td>
+    <td>{{$teacher.Tel}}</td>
+    <td>{{$teacher.Remark}}</td>
+    <td></td>
+    <td></td>
+  </tr>
+  {{end}}
+</table>
+{{end}}

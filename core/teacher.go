@@ -6,21 +6,21 @@ import (
 	"strconv"
 )
 
-func GetStudent(ctx *gin.Context) {
-	var students []Student
-	DB.Preload("Class").Find(&students)
-	ctx.HTML(200, "student.html", gin.H{
-		"students": students,
+func GetTeacher(ctx *gin.Context) {
+	var teachers []Teacher
+	DB.Preload("Class").Find(&teachers)
+	ctx.HTML(200, "teacher.html", gin.H{
+		"teachers": teachers,
 	})
 }
-func GetAddStuHtml(ctx *gin.Context) {
+func GetAddTeacherHtml(ctx *gin.Context) {
 	var classes []Class
 	DB.Find(&classes)
-	ctx.HTML(200, "addStudent.html", gin.H{
+	ctx.HTML(200, "addTeacher.html", gin.H{
 		"classes": classes,
 	})
 }
-func AddStudent(ctx *gin.Context) {
+func AddTeacher(ctx *gin.Context) {
 	//获取前端请求数据
 	sno, _ := strconv.Atoi(ctx.PostForm("sno"))
 	name := ctx.PostForm("name")
@@ -34,6 +34,6 @@ func AddStudent(ctx *gin.Context) {
 	//数据库存储
 	DB.Create(&stus)
 	//数据库查询
-	ctx.Redirect(301, "/student")
+	ctx.Redirect(301, "/teacher")
 
 }

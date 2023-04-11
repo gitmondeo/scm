@@ -18,8 +18,11 @@ func InitRoute(r *gin.Engine) {
 	InitClassRoute(class)
 
 	//课程请求
-
 	course := r.Group("/course")
 	InitCourseRoute(course)
+
+	//teacher请求
+	teacher := r.Group("/teacher")
+	InitTeachRoute(teacher)
 
 }

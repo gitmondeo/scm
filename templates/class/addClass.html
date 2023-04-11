@@ -17,10 +17,8 @@
     </div>
     <div class="form-group">
         <label for="tutor">导员</label>
-        <select name="tutor" class="form-control" id="tutor">
-            {{range $tutor := .tutors}}
-            <option value="{{$tutor.ID}}">{{$tutor.Name}}</option>
-            {{end}}
+        <select name="tutor" id="tutor" class="form-control">
+            <option value=""></option>
         </select>
     </div>
 

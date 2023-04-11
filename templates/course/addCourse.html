@@ -17,13 +17,13 @@
     </div>
     <div class="form-group">
         <label for="period">学时</label>
-        <input class="form-control" type="password" name="period" id="period" placeholder="学时">
+        <input class="form-control" type="text" name="period" id="period" placeholder="学时">
     </div>
     <div class="form-group">
         <label for="teacher">授课教师</label>
         <select name="teacher" id="teacher" class="form-control">
-            {{range $teacher := .teachers}}
-            <option value="{{$teacher.ID}}">{{$teacher.Name}}</option>
+            {{range $tutor := .teachers}}
+            <option value="{{$tutor.ID}}">{{$tutor.Name}}</option>
             {{end}}
         </select>
 
