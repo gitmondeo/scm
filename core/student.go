@@ -8,7 +8,15 @@ import (
 
 func GetStudent(ctx *gin.Context) {
 	var students []Student
-	DB.Preload("Class").Find(&students)
+	//获取搜索框传入的参数
+	searchParams := ctx.Query("searchParams")
+	//如果搜索框有参数，进行模糊搜索，否则搜索所有内容（%searchParams% 两个百分号进行模糊搜索）
+	if searchParams == "" {
+		DB.Preload("Class").Find(&students)
+	} else {
+		DB.Where("name like ?", "%"+searchParams+"%").Preload("Class").Find(&students)
+	}
+
 	ctx.HTML(200, "student.html", gin.H{
 		"students": students,
 	})

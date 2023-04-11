@@ -20,12 +20,16 @@
     <th>学分</th>
     <th>学时</th>
     <th>授课老师</th>
+    <th>编辑</th>
+    <th>删除</th>
     {{range $course := .courses}}
     <tr>
         <td>{{$course.Name}}</td>
         <td>{{$course.Credit}}</td>
         <td>{{$course.Period}}</td>
         <td>{{$course.Teacher.Name}}</td>
+        <td></td>
+        <td></td>
         {{end}}
     </tr>
 </table>

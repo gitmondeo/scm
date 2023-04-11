@@ -26,11 +26,8 @@ func AddCourse(ctx *gin.Context) {
 	name := ctx.PostForm("name")
 	credit, _ := strconv.Atoi(ctx.PostForm("credit"))
 	period, _ := strconv.Atoi(ctx.PostForm("period"))
-	teacherID, _ := strconv.Atoi(ctx.PostForm("teacher"))
-	courses := Course{Base: Base{Name: name}, Credit: credit, Period: period, TeacherID: teacherID}
-	DB.Create(&courses)
-	//ctx.JSON(200, gin.H{
-	//	"courses": courses,
-	//})
-	ctx.Redirect(302, "/course")
+	teacher, _ := strconv.Atoi(ctx.PostForm("teacher"))
+	addCourses := Course{Base: Base{Name: name}, Credit: credit, Period: period, TeacherID: teacher}
+	DB.Create(&addCourses)
+	ctx.Redirect(301, "/course")
 }

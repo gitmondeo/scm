@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	. "scm/db"
 	"strconv"
@@ -8,24 +9,28 @@ import (
 )
 
 func GetClass(ctx *gin.Context) {
-	ctx.HTML(200, "class.html", nil)
+	var classes []Class
+	DB.Preload("Course").Find(&classes)
+	ctx.HTML(200, "class.html", gin.H{
+		"classes": classes,
+	})
 }
 func GetClassHtml(ctx *gin.Context) {
-	ctx.HTML(200, "addClass.html", nil)
-
+	var tutors []Teacher
+	DB.Find(&tutors)
+	ctx.HTML(200, "addClass.html", gin.H{
+		"tutors": tutors,
+	})
 }
 
 func AddClass(ctx *gin.Context) {
 	name := ctx.PostForm("name")
 	num, _ := strconv.Atoi(ctx.PostForm("num"))
 	tutor, _ := strconv.Atoi(ctx.PostForm("tutor"))
+	fmt.Println(tutor)
 	addClass := Class{Base: Base{Name: name}, Num: num, TutorID: tutor}
+	fmt.Println(addClass)
 	DB.Create(&addClass)
-
-	var classes []Class
-	DB.Find(&classes)
-	ctx.JSON(200, gin.H{
-		"classes": classes,
-	})
+	ctx.Redirect(301, "/class")
 
 }
