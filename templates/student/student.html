@@ -40,7 +40,8 @@
         <td>{{$stu.Tel}}</td>
         <td>{{$stu.Class.Name}}</td>
         <td>{{$stu.Remark}}</td>
-        <td></td>
+        <td><a href="/student/edit/{{$stu.Sno}}"><span class="glyphicon glyphicon-edit"></span></a></td>
+        <td><a href="/student/delete/{{$stu.Sno}}"><span class="glyphicon glyphicon-trash"></span></a></td>
         <td></td>
     </tr>
     {{end}}
