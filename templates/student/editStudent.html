@@ -1,0 +1,56 @@
+{{template "base.html" .}}
+
+{{define "title"}}
+<title>编辑学生</title>
+{{end}}
+
+{{define "content"}}
+<h3>编辑学生</h3><br>
+<form action="/student/add" method="post">
+  <div class="form-group">
+    <label for="sno">学号</label>
+    <input class="form-control" type="text" name="sno" id="sno" value="{{.students.Sno}}">
+  </div>
+  <div class="form-group">
+    <label for="name">姓名</label>
+    <input class="form-control" type="text" name="name" id="name" value="{{.students.Name}}">
+  </div>
+  <div class="form-group">
+    <label for="pwd">密码</label>
+    <input class="form-control" type="text" name="pwd" id="pwd" placeholder="密码" value="{{.students.Pwd}}">
+  </div>
+  <div class="form-group">
+    <label for="gender">性别</label>
+    <select name="gender" id="gender" class="form-control">
+      {{if eq .students.Gender "男"}}
+      <option value="男" selected>男</option>
+      <option value="女">女</option>
+      {{else}}
+      <option value="男">男</option>
+      <option value="女" selected>女</option>
+      {{end}}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="tel">电话</label>
+    <input class="form-control" type="text" name="tel" id="tel" value="{{.students.Tel}}">
+  </div>
+  <div class="form-group">
+    <label for="age">年龄</label>
+    <input class="form-control" type="text" name="age" id="age" value="{{.students.Age}}">
+  </div>
+  <div class="form-group">
+    <label for="cls">班级</label>
+    <select name="cls" class="form-control" id="cls">
+      <option value="{{.students.ClassID}}">{{.students.Class.Name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="remark">备注</label>
+    <input class="form-control" type="text" name="remark" id="remark" placeholder="备注" value="{{.students.Remark}}">
+  </div>
+
+  <input type="submit" value="提交" class="btn btn-danger pull-right">
+</form>
+
+{{end}}
