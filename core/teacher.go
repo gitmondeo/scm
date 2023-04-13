@@ -8,7 +8,13 @@ import (
 
 func GetTeacher(ctx *gin.Context) {
 	var teachers []Teacher
-	DB.Find(&teachers)
+	searchParams := ctx.Query("searchParams")
+	if searchParams == "" {
+		DB.Find(&teachers)
+	} else {
+		DB.Where("name like ?", "%"+searchParams+"%").Find(&teachers)
+	}
+
 	ctx.HTML(200, "teacher.html", gin.H{
 		"teachers": teachers,
 	})
