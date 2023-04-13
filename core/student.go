@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"net/http"
 	. "scm/db"
 	"strconv"
@@ -49,6 +50,8 @@ func AddStudent(ctx *gin.Context) {
 	stus := Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, Pwd: pwd, ClassID: cls, Remark: remark}
 	//数据库存储
 	DB.Create(&stus)
+	//添加一个学生，班级人数加1，通过gorm.Expr表达式实现
+	DB.Model(&Class{}).Where("id = ?", cls).Update("num", gorm.Expr("num+1"))
 	//数据库查询
 	ctx.Redirect(301, "/student")
 
