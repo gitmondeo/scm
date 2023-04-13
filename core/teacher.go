@@ -1,11 +1,13 @@
 package core
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	. "scm/db"
 	"strconv"
 )
 
+// GetTeacher 教师页面
 func GetTeacher(ctx *gin.Context) {
 	var teachers []Teacher
 	searchParams := ctx.Query("searchParams")
@@ -19,9 +21,13 @@ func GetTeacher(ctx *gin.Context) {
 		"teachers": teachers,
 	})
 }
+
+// GetAddTeacherHtml 获取添加教师界面
 func GetAddTeacherHtml(ctx *gin.Context) {
 	ctx.HTML(200, "addTeacher.html", nil)
 }
+
+// AddTeacher 添加教师
 func AddTeacher(ctx *gin.Context) {
 	//获取前端请求数据
 	tno, _ := strconv.Atoi(ctx.PostForm("tno"))
@@ -36,5 +42,11 @@ func AddTeacher(ctx *gin.Context) {
 	DB.Create(&teachers)
 	//数据库查询
 	ctx.Redirect(301, "/teacher")
+}
+
+// DeleteTeacher 删除教师
+func DeleteTeacher(ctx *gin.Context) {
+	delID := ctx.Param("delID")
+	fmt.Println("delID:::", delID)
 
 }
