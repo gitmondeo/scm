@@ -6,7 +6,7 @@
 
 {{define "content"}}
 <h3>编辑学生</h3><br>
-<form action="/student/add" method="post">
+<form action="" method="post">
   <div class="form-group">
     <label for="sno">学号</label>
     <input class="form-control" type="text" name="sno" id="sno" value="{{.students.Sno}}">
@@ -42,7 +42,16 @@
   <div class="form-group">
     <label for="cls">班级</label>
     <select name="cls" class="form-control" id="cls">
-      <option value="{{.students.ClassID}}">{{.students.Class.Name}}</option>
+      {{$studentClassID := .students.ClassID}}
+      {{range $class := .classes}}
+      {{if eq $class.ID $studentClassID}}
+      <option selected value="{{$class.ID}}">{{$class.Name}}</option>
+      {{else}}
+      <option value="{{$class.ID}}">{{$class.Name}}</option>
+      {{end}}
+      {{end}}
+
+
     </select>
   </div>
   <div class="form-group">

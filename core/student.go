@@ -67,14 +67,41 @@ func DeleteStudent(ctx *gin.Context) {
 func GetEditStuHtml(ctx *gin.Context) {
 	var students Student
 	editID := ctx.Param("editID")
-	DB.Where("sno = ?", editID).Preload("Class").Find(&students)
+	DB.Where("sno = ?", editID).Find(&students)
+
+	//查找出所有班级
+	var classes []Class
+	DB.Find(&classes)
 	ctx.HTML(200, "editStudent.html", gin.H{
 		"students": students,
+		"classes":  classes,
 	})
 }
 
 //编辑学生
 func EditStudent(ctx *gin.Context) {
+	//获取前端请求数据
+	sno, _ := strconv.Atoi(ctx.PostForm("sno"))
+	name := ctx.PostForm("name")
+	age, _ := strconv.Atoi(ctx.PostForm("age"))
+	gender := ctx.PostForm("gender")
+	tel := ctx.PostForm("tel")
+	cls, _ := strconv.Atoi(ctx.PostForm("cls"))
+	remark := ctx.PostForm("remark")
+	pwd := ctx.PostForm("pwd")
 
+	//查询sno对应的ID
+	//1)查找出所有学生
+	var students []Student
+	DB.Find(&students)
+	//2）根据sno找到id
+	var ID int
+	for _, stu := range students {
+		if stu.Sno == sno {
+			ID = stu.ID
+		}
+	}
+	//修改数据库，Model是条件，默认是ID主键值才行，下方是自定义条件
+	DB.Model(&Student{}).Where("ID = ?", ID).Updates(Student{Base: Base{Name: name}, Age: age, Gender: gender, Tel: tel, ClassID: cls, Remark: remark, Pwd: pwd})
 	ctx.Redirect(http.StatusMovedPermanently, "/student")
 }
