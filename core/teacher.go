@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	. "scm/db"
 	"strconv"
 )
@@ -36,8 +37,9 @@ func AddTeacher(ctx *gin.Context) {
 	gender := ctx.PostForm("gender")
 	tel := ctx.PostForm("tel")
 	remark := ctx.PostForm("remark")
+	pwd := ctx.PostForm("pwd")
 	//赋值给student对象
-	teachers := Teacher{Base: Base{Name: name}, Tno: tno, Age: age, Gender: gender, Tel: tel, Remark: remark}
+	teachers := Teacher{Base: Base{Name: name}, Tno: tno, Age: age, Gender: gender, Tel: tel, Pwd: pwd, Remark: remark}
 	//数据库存储
 	DB.Create(&teachers)
 	//数据库查询
@@ -49,5 +51,33 @@ func DeleteTeacher(ctx *gin.Context) {
 	delID := ctx.Param("delID")
 	fmt.Println("delID:::", delID)
 	DB.Where("tno = ?", delID).Delete(&Teacher{})
-	ctx.Redirect(301, "/teacher")
+	ctx.Redirect(http.StatusMovedPermanently, "/teacher")
+}
+
+// GetEditTeacherHtml 获取编辑教师页面
+func GetEditTeacherHtml(ctx *gin.Context) {
+	editID := ctx.Param("editID")
+	var teachers Teacher
+	DB.Where("tno = ?", editID).Find(&teachers)
+	ctx.HTML(200, "editTeacher.html", gin.H{
+		"teachers": teachers,
+	})
+}
+
+//EditTeacher 编辑教师
+func EditTeacher(ctx *gin.Context) {
+	//获取前端请求数据
+	tno, _ := strconv.Atoi(ctx.PostForm("tno"))
+	name := ctx.PostForm("name")
+	age, _ := strconv.Atoi(ctx.PostForm("age"))
+	gender := ctx.PostForm("gender")
+	tel := ctx.PostForm("tel")
+	remark := ctx.PostForm("remark")
+	pwd := ctx.PostForm("pwd")
+	//根据tno查找id
+	fmt.Println("params:::", tel, tno, name, age, gender, remark, pwd)
+	var teacher Teacher
+	DB.Where("tno = ?", tno).Find(&teacher)
+	DB.Model(&Teacher{}).Where("id = ?", teacher.ID).Updates(&Teacher{Base: Base{Name: name}, Gender: gender, Age: age, Tel: tel, Remark: remark})
+	ctx.Redirect(http.StatusMovedPermanently, "/teacher")
 }

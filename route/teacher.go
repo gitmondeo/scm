@@ -11,4 +11,6 @@ func InitTeachRoute(r *gin.RouterGroup) {
 	r.GET("/add", GetAddTeacherHtml)
 	r.POST("/add", AddTeacher)
 	r.GET("/delete/:delID", DeleteTeacher)
+	r.GET("/edit/:editID", GetEditTeacherHtml)
+	r.POST("/edit/:editID", EditTeacher)
 }
