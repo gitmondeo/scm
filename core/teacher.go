@@ -48,5 +48,6 @@ func AddTeacher(ctx *gin.Context) {
 func DeleteTeacher(ctx *gin.Context) {
 	delID := ctx.Param("delID")
 	fmt.Println("delID:::", delID)
-
+	DB.Where("tno = ?", delID).Delete(&Teacher{})
+	ctx.Redirect(301, "/teacher")
 }

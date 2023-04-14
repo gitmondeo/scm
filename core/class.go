@@ -10,7 +10,7 @@ import (
 
 func GetClass(ctx *gin.Context) {
 	var classes []Class
-	DB.Preload("Course").Find(&classes)
+	DB.Find(&classes)
 	ctx.HTML(200, "class.html", gin.H{
 		"classes": classes,
 	})
