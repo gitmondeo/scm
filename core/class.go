@@ -51,3 +51,26 @@ func DeleteClass(ctx *gin.Context) {
 	DB.Where("name = ?", delID).Delete(&Class{})
 	ctx.Redirect(http.StatusMovedPermanently, "/class")
 }
+
+// GetEditClassHtml 获取编辑班级页面
+func GetEditClassHtml(ctx *gin.Context) {
+	editID := ctx.Param("editID")
+	var tutors []Teacher
+	DB.Find(&tutors)
+
+	var classes Class
+	DB.Where("name = ?", editID).Find(&classes)
+	ctx.HTML(200, "editClass.html", gin.H{
+		"classes": classes,
+		"tutors":  tutors,
+	})
+}
+
+//编辑班级
+func EditClass(ctx *gin.Context) {
+	name := ctx.PostForm("name")
+	num, _ := strconv.Atoi(ctx.PostForm("num"))
+	tutor, _ := strconv.Atoi(ctx.PostForm("tutor"))
+	DB.Model(&Class{}).Where("name = ?", name).Updates(&Class{Base: Base{}, Num: num, TutorID: tutor})
+	ctx.Redirect(301, "/class")
+}

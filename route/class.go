@@ -10,4 +10,6 @@ func InitClassRoute(r *gin.RouterGroup) {
 	r.GET("/add", GetClassHtml)
 	r.POST("/add", AddClass)
 	r.GET("/delete/:delID", DeleteClass)
+	r.GET("/edit/:editID", GetEditClassHtml)
+	r.POST("/edit/:editID", EditClass)
 }

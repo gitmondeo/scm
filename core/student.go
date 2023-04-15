@@ -105,6 +105,6 @@ func EditStudent(ctx *gin.Context) {
 		}
 	}
 	//修改数据库，Model是条件，默认是ID主键值才行，下方是自定义条件
-	DB.Model(&Student{}).Where("ID = ?", ID).Updates(Student{Base: Base{Name: name}, Age: age, Gender: gender, Tel: tel, ClassID: cls, Remark: remark, Pwd: pwd})
+	DB.Model(&Student{}).Where("ID = ?", ID).Updates(Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, ClassID: cls, Remark: remark, Pwd: pwd})
 	ctx.Redirect(http.StatusMovedPermanently, "/student")
 }
