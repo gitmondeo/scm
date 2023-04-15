@@ -23,8 +23,9 @@
       {{range $tutor := .tutors}}
       {{if eq $tutor.ID $classTutorID}}
       <option selected value="{{$tutor.ID}}">{{$tutor.Name}}</option>
-      {{end}}
+      {{else}}
       <option value="{{$tutor.ID}}">{{$tutor.Name}}</option>
+      {{end}}
       {{end}}
     </select>
   </div>

@@ -18,8 +18,11 @@ func GetClass(ctx *gin.Context) {
 	} else {
 		DB.Where("name like ?", "%"+searchParams+"%").Find(&classes)
 	}
+	var tutors []Teacher
+	DB.Find(&tutors)
 	ctx.HTML(200, "class.html", gin.H{
 		"classes": classes,
+		"tutors":  tutors,
 	})
 }
 
@@ -54,10 +57,10 @@ func DeleteClass(ctx *gin.Context) {
 
 // GetEditClassHtml 获取编辑班级页面
 func GetEditClassHtml(ctx *gin.Context) {
-	editID := ctx.Param("editID")
 	var tutors []Teacher
 	DB.Find(&tutors)
 
+	editID := ctx.Param("editID")
 	var classes Class
 	DB.Where("name = ?", editID).Find(&classes)
 	ctx.HTML(200, "editClass.html", gin.H{
@@ -66,7 +69,7 @@ func GetEditClassHtml(ctx *gin.Context) {
 	})
 }
 
-//编辑班级
+// EditClass 编辑班级
 func EditClass(ctx *gin.Context) {
 	name := ctx.PostForm("name")
 	num, _ := strconv.Atoi(ctx.PostForm("num"))
