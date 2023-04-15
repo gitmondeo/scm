@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"net/http"
 	. "scm/db"
 	"strconv"
 	//. "scm/db"
@@ -22,7 +23,7 @@ func GetClass(ctx *gin.Context) {
 	})
 }
 
-//添加班级页面
+// GetClassHtml 添加班级页面
 func GetClassHtml(ctx *gin.Context) {
 	var tutors []Teacher
 	DB.Find(&tutors)
@@ -31,7 +32,7 @@ func GetClassHtml(ctx *gin.Context) {
 	})
 }
 
-//添加班级
+// AddClass 添加班级
 func AddClass(ctx *gin.Context) {
 	name := ctx.PostForm("name")
 	num, _ := strconv.Atoi(ctx.PostForm("num"))
@@ -41,4 +42,12 @@ func AddClass(ctx *gin.Context) {
 	fmt.Println(addClass)
 	DB.Create(&addClass)
 	ctx.Redirect(301, "/class")
+}
+
+// DeleteClass 删除班级
+func DeleteClass(ctx *gin.Context) {
+	delID := ctx.Param("delID")
+	fmt.Println("delID:::", delID)
+	DB.Where("name = ?", delID).Delete(&Class{})
+	ctx.Redirect(http.StatusMovedPermanently, "/class")
 }
