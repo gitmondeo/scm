@@ -8,13 +8,21 @@ import (
 	//. "scm/db"
 )
 
+// GetClass 课程页面
 func GetClass(ctx *gin.Context) {
 	var classes []Class
-	DB.Find(&classes)
+	searchParams := ctx.Query("searchParams")
+	if searchParams == "" {
+		DB.Find(&classes)
+	} else {
+		DB.Where("name like ?", "%"+searchParams+"%").Find(&classes)
+	}
 	ctx.HTML(200, "class.html", gin.H{
 		"classes": classes,
 	})
 }
+
+//添加班级页面
 func GetClassHtml(ctx *gin.Context) {
 	var tutors []Teacher
 	DB.Find(&tutors)
@@ -23,6 +31,7 @@ func GetClassHtml(ctx *gin.Context) {
 	})
 }
 
+//添加班级
 func AddClass(ctx *gin.Context) {
 	name := ctx.PostForm("name")
 	num, _ := strconv.Atoi(ctx.PostForm("num"))
@@ -32,5 +41,4 @@ func AddClass(ctx *gin.Context) {
 	fmt.Println(addClass)
 	DB.Create(&addClass)
 	ctx.Redirect(301, "/class")
-
 }
