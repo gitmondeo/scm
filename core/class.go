@@ -42,7 +42,6 @@ func AddClass(ctx *gin.Context) {
 	tutor, _ := strconv.Atoi(ctx.PostForm("tutor"))
 	fmt.Println(tutor)
 	addClass := Class{Base: Base{Name: name}, Num: num, TutorID: tutor}
-	fmt.Println(addClass)
 	DB.Create(&addClass)
 	ctx.Redirect(301, "/class")
 }

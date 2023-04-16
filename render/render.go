@@ -19,6 +19,7 @@ func CreateMyRender() multitemplate.Renderer {
 	render.AddFromFiles("editClass.html", "templates/base/base.html", "templates/class/editClass.html")
 	//course
 	render.AddFromFiles("addCourse.html", "templates/base/base.html", "templates/course/addCourse.html")
+	render.AddFromFiles("editCourse.html", "templates/base/base.html", "templates/course/editCourse.html")
 	//teacher
 	render.AddFromFiles("addTeacher.html", "templates/base/base.html", "templates/teacher/addTeacher.html")
 	render.AddFromFiles("editTeacher.html", "templates/base/base.html", "templates/teacher/editTeacher.html")

@@ -1,33 +1,42 @@
 {{template "base.html" .}}
 
 {{define "title"}}
-<title>添加课程</title>
+<title>编辑课程</title>
 {{end}}
 
 {{define "content"}}
-<h3>添加课程</h3><br>
-<form action="/course/add" method="post">
+<h3>编辑课程</h3><br>
+
+<form action="" method="post">
     <div class="form-group">
         <label for="name">课程名称</label>
-        <input class="form-control" type="text" name="name" id="name" placeholder="课程名称">
+        <input class="form-control" type="text" name="name" id="name" placeholder="课程名称" value="{{.courses.Name}}">
     </div>
     <div class="form-group">
         <label for="credit">学分</label>
-        <input class="form-control" type="text" name="credit" id="credit" placeholder="学分">
+        <input class="form-control" type="text" name="credit" id="credit" placeholder="学分" value="{{.courses.Credit}}">
     </div>
     <div class="form-group">
         <label for="period">学时</label>
-        <input class="form-control" type="text" name="period" id="period" placeholder="学时">
+        <input class="form-control" type="text" name="period" id="period" placeholder="学时" value="{{.courses.Period}}">
     </div>
     <div class="form-group">
         <label for="teacher">授课教师</label>
         <select name="teacher" id="teacher" class="form-control">
+            {{$coursesTeacherID := .courses.TeacherID}}
+
             {{range $teacher := .teachers}}
+
+            {{if eq $teacher.ID $coursesTeacherID}}
+            <option selected value="{{$teacher.ID}}">{{$teacher.Name}}</option>
+            {{else}}
             <option value="{{$teacher.ID}}">{{$teacher.Name}}</option>
+            {{end}}
             {{end}}
         </select>
     </div>
     <input type="submit" value="提交" class="btn btn-danger pull-right">
 </form>
+
 
 {{end}}
