@@ -5,6 +5,17 @@
         text-align: center;
     }
 </style>
+{{define "nav"}}
+<div class="navbar-header">
+    <!-- The mobile navbar-toggle button can be safely removed since you do not need it in a non-responsive implementation -->
+    <a class="navbar-brand" href="/">学生选课系统</a>
+</div>
+{{end}}
+
+
+
+
+
 {{define "menu"}}
 <div class="panel panel-default">
     <div class="panel-heading">Hello，{{.student.Name}}</div>
@@ -42,7 +53,26 @@
 
 <br><br>
 
-<h3>选课详情</h3>
+<table class="table table-bordered">
+    <tr>
+        <td class="danger" colspan="4">已选课程</td>
+    </tr>
+    <tr>
+        <th>课程名称</th>
+        <th>学分</th>
+        <th>学时</th>
+        <th>授课教师</th>
+    </tr>
+    {{range $course := .selectCourses}}
+    <tr>
+        <td>{{$course.Name}}</td>
+        <td>{{$course.Credit}}</td>
+        <td>{{$course.Period}}</td>
+        <td>{{$course.Teacher.Name}}</td>
+    </tr>
+    {{end}}
+
+</table>
 {{end}}
 
 

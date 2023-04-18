@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-//学生页面，模糊搜索
+// GetALLStudent 学生页面，模糊搜索
 func GetALLStudent(ctx *gin.Context) {
 	var students []Student
 	//获取搜索框传入的参数
@@ -26,7 +26,7 @@ func GetALLStudent(ctx *gin.Context) {
 	})
 }
 
-//添加学生页面
+// GetAddStuHtml 添加学生页面
 func GetAddStuHtml(ctx *gin.Context) {
 	var classes []Class
 	DB.Find(&classes)
@@ -35,7 +35,7 @@ func GetAddStuHtml(ctx *gin.Context) {
 	})
 }
 
-//添加学生，保存到数据库
+// AddStudent 添加学生，保存到数据库
 func AddStudent(ctx *gin.Context) {
 	//获取前端请求数据
 	sno, _ := strconv.Atoi(ctx.PostForm("sno"))
@@ -57,7 +57,7 @@ func AddStudent(ctx *gin.Context) {
 
 }
 
-//删除学生
+// DeleteStudent 删除学生
 func DeleteStudent(ctx *gin.Context) {
 	delID := ctx.Param("delID")
 	fmt.Println("delID", delID)
@@ -66,7 +66,7 @@ func DeleteStudent(ctx *gin.Context) {
 	ctx.Redirect(http.StatusMovedPermanently, "/student")
 }
 
-//编辑学生页面
+// GetEditStuHtml 编辑学生页面
 func GetEditStuHtml(ctx *gin.Context) {
 	var students Student
 	editID := ctx.Param("editID")
@@ -81,7 +81,7 @@ func GetEditStuHtml(ctx *gin.Context) {
 	})
 }
 
-//编辑学生
+// EditStudent 编辑学生
 func EditStudent(ctx *gin.Context) {
 	//获取前端请求数据
 	sno, _ := strconv.Atoi(ctx.PostForm("sno"))
@@ -109,18 +109,22 @@ func EditStudent(ctx *gin.Context) {
 	ctx.Redirect(http.StatusMovedPermanently, "/student")
 }
 
-//获取单个学生页面
+// GetOneStudent 获取单个学生页面
 func GetOneStudent(ctx *gin.Context) {
 	sno := ctx.Param("sno")
 	var student Student
 	DB.Preload("Class").Where("sno = ?", sno).Find(&student)
 
+	//查询学生选择的课程
+	var selectCourses []Course
+	DB.Preload("Teacher").Model(&student).Association("Course").Find(&selectCourses)
 	ctx.HTML(http.StatusOK, "detailStudent.html", gin.H{
-		"student": student,
+		"student":       student,
+		"selectCourses": selectCourses,
 	})
 }
 
-//获取学生选课界面
+// GetSelectCourseHtml 获取学生选课界面
 func GetSelectCourseHtml(ctx *gin.Context) {
 	sno := ctx.Param("sno")
 	var student Student
@@ -132,4 +136,17 @@ func GetSelectCourseHtml(ctx *gin.Context) {
 		"courses": courses,
 		"student": student,
 	})
+}
+
+func SelectCourse(ctx *gin.Context) {
+	sno := ctx.Param("sno")
+	var student Student
+	DB.Where("sno = ?", sno).Find(&student)
+
+	courseID := ctx.PostFormArray("course_id")
+	var courses []Course
+	DB.Where("id in ?", courseID).Find(&courses)
+
+	DB.Preload("Teacher").Model(&student).Association("Course").Append(&courses)
+	ctx.Redirect(http.StatusMovedPermanently, "/student/"+sno)
 }
