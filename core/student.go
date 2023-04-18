@@ -10,7 +10,7 @@ import (
 )
 
 //学生页面，模糊搜索
-func GetStudent(ctx *gin.Context) {
+func GetALLStudent(ctx *gin.Context) {
 	var students []Student
 	//获取搜索框传入的参数
 	searchParams := ctx.Query("searchParams")
@@ -107,4 +107,29 @@ func EditStudent(ctx *gin.Context) {
 	//修改数据库，Model是条件，默认是ID主键值才行，下方是自定义条件
 	DB.Model(&Student{}).Where("ID = ?", ID).Updates(Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, ClassID: cls, Remark: remark, Pwd: pwd})
 	ctx.Redirect(http.StatusMovedPermanently, "/student")
+}
+
+//获取单个学生页面
+func GetOneStudent(ctx *gin.Context) {
+	sno := ctx.Param("sno")
+	var student Student
+	DB.Preload("Class").Where("sno = ?", sno).Find(&student)
+
+	ctx.HTML(http.StatusOK, "detailStudent.html", gin.H{
+		"student": student,
+	})
+}
+
+//获取学生选课界面
+func GetSelectCourseHtml(ctx *gin.Context) {
+	sno := ctx.Param("sno")
+	var student Student
+	DB.Where("sno = ?", sno).Find(&student)
+	var courses []Course
+	DB.Preload("Teacher").Find(&courses)
+	fmt.Println("courses:::", courses)
+	ctx.HTML(http.StatusOK, "selectCourse.html", gin.H{
+		"courses": courses,
+		"student": student,
+	})
 }

@@ -1,0 +1,41 @@
+{{template "base.html" .}}
+
+{{define "menu"}}
+<div class="panel panel-default">
+    <div class="panel-heading">Hello，{{.student.Name}}</div>
+    <div class="panel-body">
+        <p><a href="/student/{{.student.Sno}}">个人详情</a></p>
+        <p><a href="">选课系统</a></p>
+    </div>
+</div>
+{{end}}
+
+{{define "content"}}
+<h3>选课系统</h3><br>
+<form action="" method="post">
+  <table class="table table-bordered">
+    <tr>
+      <th>选择</th>
+      <th>课程ID</th>
+      <th>课程名称</th>
+      <th>学分</th>
+      <th>学时</th>
+      <th>授课教师</th>
+    </tr>
+    {{range $course := .courses}}
+    <tr>
+      <td><input type="checkbox" name="course_id" value="{{$course.ID}}"></td>
+      <td>{{$course.ID}}</td>
+      <td>{{$course.Name}}</td>
+      <td>{{$course.Credit}}</td>
+      <td>{{$course.Period}}</td>
+      <td>{{$course.Teacher.Name}}</td>
+    </tr>
+    {{end}}
+  </table>
+  <input type="submit" class="pull-right btn btn-primary">
+</form>
+
+{{end}}
+
+
