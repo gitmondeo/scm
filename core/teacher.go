@@ -78,6 +78,6 @@ func EditTeacher(ctx *gin.Context) {
 	fmt.Println("params:::", tel, tno, name, age, gender, remark, pwd)
 	var teacher Teacher
 	DB.Where("tno = ?", tno).Find(&teacher)
-	DB.Model(&Teacher{}).Where("id = ?", teacher.ID).Updates(&Teacher{Base: Base{Name: name}, Gender: gender, Age: age, Tel: tel, Remark: remark})
+	DB.Model(&Teacher{}).Where("id = ?", teacher.ID).Updates(&Teacher{Base: Base{Name: name}, Gender: gender, Pwd: pwd, Age: age, Tel: tel, Remark: remark})
 	ctx.Redirect(http.StatusMovedPermanently, "/teacher")
 }
