@@ -131,7 +131,6 @@ func GetSelectCourseHtml(ctx *gin.Context) {
 	DB.Where("sno = ?", sno).Find(&student)
 	var courses []Course
 	DB.Preload("Teacher").Find(&courses)
-	fmt.Println("courses:::", courses)
 	ctx.HTML(http.StatusOK, "selectCourse.html", gin.H{
 		"courses": courses,
 		"student": student,
@@ -148,5 +147,19 @@ func SelectCourse(ctx *gin.Context) {
 	DB.Where("id in ?", courseID).Find(&courses)
 
 	DB.Preload("Teacher").Model(&student).Association("Course").Append(&courses)
+	ctx.Redirect(http.StatusMovedPermanently, "/student/"+sno)
+}
+
+func DeleteSelectCourse(ctx *gin.Context) {
+	//根据学号，获取该学生对象,得到学生的ID
+	sno := ctx.Param("sno")
+	var student Student
+	DB.Where("sno = ?", sno).Find(&student)
+	student_id := student.ID
+	//获取要删除的已选课程的ID
+	courseID := ctx.Param("courseID")
+	//取消学生和课程的绑定
+	DB.Where("student_id = ? AND course_id = ?", student_id, courseID).Model(&student).Association("Course").Clear()
+	//DB.Model(&student).Association("Course").Clear()
 	ctx.Redirect(http.StatusMovedPermanently, "/student/"+sno)
 }

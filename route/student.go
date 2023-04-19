@@ -10,6 +10,7 @@ func InitStuRoute(r *gin.RouterGroup) {
 	r.GET("/:sno", GetOneStudent)
 	r.GET("/:sno/selectCourse", GetSelectCourseHtml)
 	r.POST("/:sno/selectCourse", SelectCourse)
+	r.GET("/:sno/deleteCourse/:courseID", DeleteSelectCourse)
 	//get请求拿页面，POST请求拿数据
 	r.GET("/add", GetAddStuHtml)
 	r.POST("/add", AddStudent)
