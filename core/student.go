@@ -30,8 +30,14 @@ func GetALLStudent(ctx *gin.Context) {
 func GetAddStuHtml(ctx *gin.Context) {
 	var classes []Class
 	DB.Find(&classes)
+
+	var users []UserInfo
+	DB.Find(&users)
+
+	fmt.Println("userinfo:::", users)
 	ctx.HTML(200, "addStudent.html", gin.H{
 		"classes": classes,
+		"users":   users,
 	})
 }
 
@@ -45,9 +51,10 @@ func AddStudent(ctx *gin.Context) {
 	tel := ctx.PostForm("tel")
 	cls, _ := strconv.Atoi(ctx.PostForm("cls"))
 	remark := ctx.PostForm("remark")
-	pwd := ctx.PostForm("pwd")
+	//pwd := ctx.PostForm("pwd")
+	userinfoID, _ := strconv.Atoi(ctx.PostForm("userinfoID"))
 	//赋值给student对象
-	stus := Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, Pwd: pwd, ClassID: cls, Remark: remark}
+	stus := Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, ClassID: cls, UserInfoID: userinfoID, Remark: remark}
 	//数据库存储
 	DB.Create(&stus)
 	//添加一个学生，班级人数加1，通过gorm.Expr表达式实现

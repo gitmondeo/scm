@@ -25,7 +25,11 @@ func GetTeacher(ctx *gin.Context) {
 
 // GetAddTeacherHtml 获取添加教师界面
 func GetAddTeacherHtml(ctx *gin.Context) {
-	ctx.HTML(200, "addTeacher.html", nil)
+	var users []UserInfo
+	DB.Find(&users)
+	ctx.HTML(200, "addTeacher.html", gin.H{
+		"users": users,
+	})
 }
 
 // AddTeacher 添加教师
@@ -37,9 +41,10 @@ func AddTeacher(ctx *gin.Context) {
 	gender := ctx.PostForm("gender")
 	tel := ctx.PostForm("tel")
 	remark := ctx.PostForm("remark")
-	pwd := ctx.PostForm("pwd")
+	userinfoID, _ := strconv.Atoi(ctx.PostForm("userinfoID"))
+	//pwd := ctx.PostForm("pwd")
 	//赋值给student对象
-	teachers := Teacher{Base: Base{Name: name}, Tno: tno, Age: age, Gender: gender, Tel: tel, Pwd: pwd, Remark: remark}
+	teachers := Teacher{Base: Base{Name: name}, Tno: tno, Age: age, Gender: gender, Tel: tel, UserInfoID: userinfoID, Remark: remark}
 	//数据库存储
 	DB.Create(&teachers)
 	//数据库查询
@@ -73,11 +78,11 @@ func EditTeacher(ctx *gin.Context) {
 	gender := ctx.PostForm("gender")
 	tel := ctx.PostForm("tel")
 	remark := ctx.PostForm("remark")
-	pwd := ctx.PostForm("pwd")
+	//pwd := ctx.PostForm("pwd")
 	//根据tno查找id
-	fmt.Println("params:::", tel, tno, name, age, gender, remark, pwd)
+	//fmt.Println("params:::", tel, tno, name, age, gender, remark, pwd)
 	var teacher Teacher
 	DB.Where("tno = ?", tno).Find(&teacher)
-	DB.Model(&Teacher{}).Where("id = ?", teacher.ID).Updates(&Teacher{Base: Base{Name: name}, Gender: gender, Pwd: pwd, Age: age, Tel: tel, Remark: remark})
+	DB.Model(&Teacher{}).Where("id = ?", teacher.ID).Updates(&Teacher{Base: Base{Name: name}, Gender: gender, Age: age, Tel: tel, Remark: remark})
 	ctx.Redirect(http.StatusMovedPermanently, "/teacher")
 }
