@@ -36,6 +36,10 @@ type Teacher struct {
 	Remark string     `gorm:"type:varchar(255);"` //备注
 	Gender string     `gorm:"type:varchar(1);"`   //性别
 	Age    int
+
+	//和UserInfo表建立一对一关系
+	UserInfoID int `gorm:"unique"`
+	UserInfo   UserInfo
 }
 
 //班级表
@@ -63,6 +67,10 @@ type Student struct {
 
 	//多对多
 	Course []Course `gorm:"many2many:student2course;constraint:OnDelete:CASCADE;"`
+
+	//和UserInfo表建立一对一关系
+	UserInfoID int `gorm:"unique"`
+	UserInfo   UserInfo
 }
 
 //课程表
@@ -74,4 +82,18 @@ type Course struct {
 	//多对一
 	TeacherID int
 	Teacher   Teacher
+}
+
+type Admin struct {
+	Base
+	//和UserInfo表建立一对一关系
+	UserInfoID int `gorm:"unique"`
+	UserInfo   UserInfo
+}
+
+//登录用户表，和teacher表、student表、admin表建立 一对一关联关系
+type UserInfo struct {
+	ID       int `grom:"primaryKey"`
+	Account  string
+	Password string
 }

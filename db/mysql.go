@@ -30,6 +30,7 @@ func InitDB() *gorm.DB {
 		&Class{},
 		&Student{},
 		&Course{},
+		&Admin{},
 	)
 	return DB
 
