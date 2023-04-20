@@ -6,6 +6,9 @@ import (
 )
 
 func InitRoute(r *gin.Engine) {
+	//登录请求
+	r.GET("/login", GetLoginHtml)
+
 	//首页请求
 	r.GET("/", GetIndex)
 

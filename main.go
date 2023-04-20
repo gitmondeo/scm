@@ -10,6 +10,8 @@ import (
 func main() {
 	//获取gin引擎对象
 	r := gin.Default()
+	//加载静态文件
+	r.Static("/static", "./static")
 	//初始化数据库，连接数据库，迁移模型类生成SQL，生成表
 	InitDB()
 	//gin自带的加载模板
