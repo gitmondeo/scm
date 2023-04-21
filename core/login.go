@@ -1,7 +1,6 @@
 package core
 
 import (
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	. "scm/db"
@@ -21,19 +20,19 @@ func Login(ctx *gin.Context) {
 	if userinfo.ID == 0 {
 		ctx.Redirect(http.StatusMovedPermanently, "/login")
 	} else {
-		/*//cookie验证
+		//cookie验证
 		//写cookie，登录成功设置cookie，键值对：isLogin：True
-		ctx.SetCookie("isLogin", "true", 200, "/", "127.0.0.1", false, true)
-		ctx.Redirect(http.StatusMovedPermanently, "/")*/
+		ctx.SetCookie("isLogin", "true", 200, "/", "10.172.12.24", false, true)
 
 		//session验证
-		session := sessions.Default(ctx)
+		/*session := sessions.Default(ctx)
 		session.Set("isLogin", "true")
-		session.Save()
+		session.Save()*/
 
 		if userinfo.ID == 1 {
 			//root账号
-			ctx.Redirect(http.StatusMovedPermanently, "/")
+			//ctx.Redirect(http.StatusMovedPermanently, "/")
+			ctx.HTML(http.StatusOK, "base.html", nil)
 
 		} else {
 			//查询学生信息，找出学生学号，学生登录跳转到个人界面
