@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	. "scm/db"
@@ -24,8 +23,7 @@ func Login(ctx *gin.Context) {
 		//cookie验证
 		//写cookie，登录成功设置cookie，键值对：isLogin：True
 		ctx.SetCookie("isLogin", "true", 2000, "/", "10.172.12.24", false, true)
-		fmt.Println("11111")
-		fmt.Println(ctx.Cookie("isLogin"))
+
 		//session验证
 		/*session := sessions.Default(ctx)
 		session.Set("isLogin", "true")

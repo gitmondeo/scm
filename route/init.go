@@ -29,4 +29,8 @@ func InitRoute(r *gin.Engine) {
 	teacher := r.Group("/teacher")
 	InitTeachRoute(teacher)
 
+	//account请求
+	account := r.Group("/account")
+	InitAccountRoute(account)
+
 }
