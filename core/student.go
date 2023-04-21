@@ -98,7 +98,7 @@ func EditStudent(ctx *gin.Context) {
 	tel := ctx.PostForm("tel")
 	cls, _ := strconv.Atoi(ctx.PostForm("cls"))
 	remark := ctx.PostForm("remark")
-	//pwd := ctx.PostForm("pwd")
+	pwd := ctx.PostForm("pwd")
 
 	//查询sno对应的ID
 	//1)查找出所有学生
@@ -112,7 +112,7 @@ func EditStudent(ctx *gin.Context) {
 		}
 	}
 	//修改数据库，Model是条件，默认是ID主键值才行，下方是自定义条件
-	DB.Model(&Student{}).Where("ID = ?", ID).Updates(Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, ClassID: cls, Remark: remark})
+	DB.Model(&Student{}).Where("ID = ?", ID).Updates(Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, ClassID: cls, Remark: remark, Pwd: pwd})
 	ctx.Redirect(http.StatusMovedPermanently, "/student")
 }
 

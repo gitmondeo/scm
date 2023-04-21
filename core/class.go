@@ -6,6 +6,7 @@ import (
 	"net/http"
 	. "scm/db"
 	"strconv"
+	//. "scm/db"
 )
 
 // GetClass 课程页面
