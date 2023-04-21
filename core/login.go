@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	. "scm/db"
+	"strconv"
 )
 
 func GetLoginHtml(ctx *gin.Context) {
@@ -29,6 +30,18 @@ func Login(ctx *gin.Context) {
 		session := sessions.Default(ctx)
 		session.Set("isLogin", "true")
 		session.Save()
-		ctx.Redirect(http.StatusMovedPermanently, "/")
+
+		if userinfo.ID == 1 {
+			//root账号
+			ctx.Redirect(http.StatusMovedPermanently, "/")
+
+		} else {
+			//查询学生信息，找出学生学号，学生登录跳转到个人界面
+			var stu Student
+			DB.Where("name = ?", userinfo.Account).Take(&stu)
+			sno := strconv.Itoa(stu.Sno)
+			ctx.Redirect(http.StatusMovedPermanently, "/student/"+sno)
+		}
+
 	}
 }
