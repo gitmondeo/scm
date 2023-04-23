@@ -120,7 +120,7 @@ func EditStudent(ctx *gin.Context) {
 func GetOneStudent(ctx *gin.Context) {
 	sno := ctx.Param("sno")
 	var student Student
-	DB.Preload("Class").Where("sno = ?", sno).Find(&student)
+	DB.Preload("Class").Preload("UserInfo").Where("sno = ?", sno).Find(&student)
 
 	//查询学生选择的课程
 	var selectCourses []Course

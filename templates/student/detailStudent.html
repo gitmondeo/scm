@@ -15,9 +15,6 @@
 {{end}}
 
 
-
-
-
 {{define "menu"}}
 <div class="panel panel-default">
     <div class="panel-heading">Hello，{{.student.Name}}</div>
@@ -53,7 +50,7 @@
         <td>{{.student.Name}}</td>
         <td>{{.student.Gender}}</td>
         <td>{{.student.Age}}</td>
-        <td>{{.student.Pwd}}</td>
+        <td>{{.student.UserInfo.Password}}</td>
         <td>{{.student.Class.Name}}</td>
         <td>{{.student.Tel}}</td>
         <td>{{.student.Birth}}</td>
