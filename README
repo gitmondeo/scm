@@ -1,0 +1,4 @@
+代码中 IP 相关说明：
+1、mysql数据库中有IP，此ip为数据库的IP
+2、main.go中r.run（）IP,在别的环境中运行，注意修改
+3、core/login.go中有IP，注意修改
