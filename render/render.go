@@ -30,6 +30,8 @@ func CreateMyRender() multitemplate.Renderer {
 	render.AddFromFiles("login.html", "templates/login/login.html")
 	//account登录账号
 	render.AddFromFiles("account.html", "templates/base/base.html", "templates/account/account.html")
+	render.AddFromFiles("addAccount.html", "templates/base/base.html", "templates/account/addAccount.html")
+	render.AddFromFiles("editAccount.html", "templates/base/base.html", "templates/account/editAccount.html")
 	//返回render
 	return render
 
