@@ -33,7 +33,7 @@
 </style>
 <table class="table table-bordered">
     <tr>
-        <td class="info" colspan="8">个人信息</td>
+        <td class="info" colspan="9">个人信息</td>
     </tr>
     <tr>
         <th>学号</th>
@@ -44,6 +44,7 @@
         <th>班级</th>
         <th>电话</th>
         <th>出生日期</th>
+        <th>编辑</th>
     </tr>
     <tr>
         <td>{{.student.Sno}}</td>
@@ -55,6 +56,7 @@
         <td>{{.student.Tel}}</td>
 <!--        <td>{{.student.Birth}}</td>-->
         <td>{{.birth}}</td>
+        <td><a href="/student/{{.student.Sno}}/editDetail"><span class="glyphicon glyphicon-edit"></span></a></td>
     </tr>
 </table>
 

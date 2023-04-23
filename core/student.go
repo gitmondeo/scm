@@ -185,3 +185,21 @@ func DeleteSelectCourse(ctx *gin.Context) {
 	//DB.Model(&student).Association("Course").Clear()
 	ctx.Redirect(http.StatusMovedPermanently, "/student/"+sno)
 }
+
+func GetEditDetailHtml(ctx *gin.Context) {
+	sno := ctx.Param("sno")
+	var stu Student
+	DB.Preload("UserInfo").Where("sno = ?", sno).Take(&stu)
+	ctx.HTML(http.StatusOK, "editDetailStudent.html", gin.H{
+		"stu": stu,
+	})
+}
+
+func EditDetail(ctx *gin.Context) {
+	sno := ctx.Param("sno")
+	tel := ctx.PostForm("tel")
+	pwd := ctx.PostForm("pwd")
+	stu := Student{Tel: tel, UserInfo: UserInfo{Password: pwd}}
+	DB.Model(&stu).Preload("UserInfo").Where("sno = ?", sno).Updates(&stu)
+	ctx.Redirect(http.StatusMovedPermanently, "/student/"+sno)
+}
