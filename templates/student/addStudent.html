@@ -11,14 +11,19 @@
         <label for="sno">学号</label>
         <input class="form-control" type="text" name="sno" id="sno" placeholder="学号">
     </div>
-    <div class="form-group">
+  <!--  <div class="form-group">
         <label for="name">姓名</label>
         <input class="form-control" type="text" name="name" id="name" placeholder="姓名">
+    </div>-->
+      <div class="form-group">
+          <label for="name">姓名</label>
+          <select name="name" class="form-control" id="name">
+              {{range $user := .users}}
+              <option value="{{$user.ID}}">{{$user.Account}}</option>
+              {{end}}
+          </select>
     </div>
-<!--    <div class="form-group">-->
-<!--        <label for="pwd">密码</label>-->
-<!--        <input class="form-control" type="password" name="pwd" id="pwd" placeholder="密码">-->
-<!--    </div>-->
+
     <div class="form-group">
         <label for="gender">性别</label>
         <select name="gender" id="gender" class="form-control">
@@ -50,7 +55,10 @@
             {{end}}
         </select>
     </div>
-
+    <div class="form-group">
+        <label for="birthday">出生日期</label>
+        <input class="form-control" type="date" name="birthday" id="birthday" placeholder="出生日期">
+    </div>
     <div class="form-group">
         <label for="remark">备注</label>
         <input class="form-control" type="text" name="remark" id="remark" placeholder="备注">

@@ -53,13 +53,13 @@ type Class struct {
 //学生表
 type Student struct {
 	Base
-	Gender string     `gorm:"type:varchar(1);"` //性别
-	Age    int        //年龄
-	Sno    int        //账号
-	Pwd    string     `gorm:"type:varchar(100);not null"` //密码
-	Tel    string     `gorm:"type:char(11);"`             //电话
-	Birth  *time.Time //生日
-	Remark string     `gorm:"type:varchar(255);"` //备注
+	Gender string    `gorm:"type:varchar(1);"` //性别
+	Age    int       //年龄
+	Sno    int       //账号
+	Pwd    string    `gorm:"type:varchar(100);not null"` //密码
+	Tel    string    `gorm:"type:char(11);"`             //电话
+	Birth  time.Time //生日
+	Remark string    `gorm:"type:varchar(255);"` //备注
 
 	//多对一
 	ClassID int   //班级ID

@@ -7,6 +7,8 @@ import (
 	"net/http"
 	. "scm/db"
 	"strconv"
+	"strings"
+	"time"
 )
 
 // GetALLStudent 学生页面，模糊搜索
@@ -51,10 +53,16 @@ func AddStudent(ctx *gin.Context) {
 	tel := ctx.PostForm("tel")
 	cls, _ := strconv.Atoi(ctx.PostForm("cls"))
 	remark := ctx.PostForm("remark")
-	//pwd := ctx.PostForm("pwd")
 	userinfoID, _ := strconv.Atoi(ctx.PostForm("userinfoID"))
+
+	birth := ctx.PostForm("birthday") + " " + "00:00:00"                         //生日，年月日+时分秒（默认0）
+	birtime, _ := time.ParseInLocation("2006-01-02 15:04:05", birth, time.Local) //将string转换成time.Time类型
+
+	fmt.Println(birth)
+	fmt.Println(birtime)
+
 	//赋值给student对象
-	stus := Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, ClassID: cls, UserInfoID: userinfoID, Remark: remark}
+	stus := Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, ClassID: cls, UserInfoID: userinfoID, Remark: remark, Birth: birtime}
 	//数据库存储
 	DB.Create(&stus)
 	//添加一个学生，班级人数加1，通过gorm.Expr表达式实现
@@ -122,12 +130,19 @@ func GetOneStudent(ctx *gin.Context) {
 	var student Student
 	DB.Preload("Class").Preload("UserInfo").Where("sno = ?", sno).Find(&student)
 
+	//出生日期想用年-月-日表示，额外做的操作
+	t := student.Birth                            //学生生日
+	birthString := t.Format("2006-01-02")         //time.time转换成字符串
+	birthslice := strings.Split(birthString, "-") //使用-分隔字符串
+	birth := birthslice[0] + "年" + birthslice[1] + "月" + birthslice[2] + "日"
+
 	//查询学生选择的课程
 	var selectCourses []Course
 	DB.Preload("Teacher").Model(&student).Association("Course").Find(&selectCourses)
 	ctx.HTML(http.StatusOK, "detailStudent.html", gin.H{
 		"student":       student,
 		"selectCourses": selectCourses,
+		"birth":         birth,
 	})
 }
 
