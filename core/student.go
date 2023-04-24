@@ -58,9 +58,6 @@ func AddStudent(ctx *gin.Context) {
 	birth := ctx.PostForm("birthday") + " " + "00:00:00"                         //生日，年月日+时分秒（默认0）
 	birtime, _ := time.ParseInLocation("2006-01-02 15:04:05", birth, time.Local) //将string转换成time.Time类型
 
-	fmt.Println(birth)
-	fmt.Println(birtime)
-
 	//赋值给student对象
 	stus := Student{Base: Base{Name: name}, Sno: sno, Age: age, Gender: gender, Tel: tel, ClassID: cls, UserInfoID: userinfoID, Remark: remark, Birth: birtime}
 	//数据库存储

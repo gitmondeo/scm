@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	. "scm/db"
@@ -47,7 +46,6 @@ func AddClass(ctx *gin.Context) {
 // DeleteClass 删除班级
 func DeleteClass(ctx *gin.Context) {
 	delID := ctx.Param("delID")
-	fmt.Println("delID:::", delID)
 	DB.Where("name = ?", delID).Delete(&Class{})
 	ctx.Redirect(http.StatusMovedPermanently, "/class")
 }

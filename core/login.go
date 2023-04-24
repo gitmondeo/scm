@@ -22,7 +22,7 @@ func Login(ctx *gin.Context) {
 	} else {
 		//cookie验证
 		//写cookie，登录成功设置cookie，键值对：isLogin：True
-		ctx.SetCookie("isLogin", "true", 2000, "/", "10.172.12.24", false, true)
+		ctx.SetCookie("isLogin", "true", 2000, "/", "127.0.0.1", false, true)
 
 		//session验证
 		/*session := sessions.Default(ctx)

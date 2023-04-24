@@ -32,5 +32,5 @@ func main() {
 	//路由
 	InitRoute(r)
 
-	r.Run("10.172.12.24:80")
+	r.Run(":80")
 }
